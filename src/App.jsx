@@ -1,8 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import "./App.css";
 
 function App() {
-  const [displaystate, setDisplaystate] = useState("gd");
+  const [displaystate, setDisplaystate] = useState("");
+  const [result, setResult] = useState("");
+
+
  useEffect(() => {
     let buttonNumbers = document.querySelectorAll(".button_number");
     let button 
@@ -10,6 +13,7 @@ function App() {
       buttonNumbers[button].addEventListener("click",you)
 
     }
+    
 
     
      
@@ -22,24 +26,82 @@ function App() {
 
     
     });
-
+    
     function you(e) {
         
       console.log('loop')
       setDisplaystate(displaystate + e.target.innerText )
     }  
+    function tokenize(s) {
+      // --- Parse a calculation string into an array of numbers and operators
+      const r = [];
+      let token = '';
+      for (const character of s) {
+          if ('^*/+-'.includes(character)) {
+              if (token === '' && character === '-') {
+                  token = '-';
+              } else {
+                  r.push(parseFloat(token), character);
+                  token = '';
+              }
+          } else {
+              token += character;
+          }
+      }
+      if (token !== '') {
+          r.push(parseFloat(token));
+      }
+      console.log(r)
+      return r;
+  }
+  
+  function calculate(tokens) {
+      // --- Perform a calculation expressed as an array of operators and numbers
+      const operatorPrecedence = [{'^': (a, b) => Math.pow(a, b)},
+                 {'*': (a, b) => a * b, '/': (a, b) => a / b},
+                 {'+': (a, b) => a + b, '-': (a, b) => a - b}];
+      let operator;
+      for (const operators of operatorPrecedence) {
+          const newTokens = [];
+          for (const token of tokens) {
+              if (token in operators) {
+                  operator = operators[token];
+              } else if (operator) {
+                  newTokens[newTokens.length - 1] = 
+                      operator(newTokens[newTokens.length - 1], token);
+                  operator = null;
+              } else {
+                  newTokens.push(token);
+              }
+          }
+          tokens = newTokens;
+      }
+      if (tokens.length > 1) {
+          console.log('Error: unable to resolve calculation');
+          return tokens;
+      } else {
+          return tokens[0];
+      }
+  }
+  function equal(){
+   let display= document.getElementById("display").innerText;
+   console.log(display)
+  setResult(calculate(tokenize(display)))
+  setDisplaystate(calculate(tokenize(display)))
 
+  }
   
 
   return (
     <div id="container">
       <div id="display">{displaystate}</div>
+      <div id="result">{result}</div>
       <div id="clear">AC</div>
       <div className="button_number" id="divide">
         /
       </div>
       <div className="button_number" id="multiply">
-        x
+        *
       </div>
 
       <div className="button_number" id="seven" >
@@ -68,18 +130,20 @@ function App() {
         1
       </div>
       <div className="button_number" id="two">
-        
+        2
       </div>
       <div className="button_number" id="three">
         3
       </div>
-      <div className="button_number" id="equals">=</div>
+      <div className="" id="equals" onClick={equal}>=</div>
       <div className="button_number" id="zero">
         0
       </div>
       <div className="button_number" id="decimal">
-        
+        .
       </div>
+      <div className="button_number">^</div>
+
     </div>
   );
 }

@@ -4,3 +4,7 @@
     background-coor: blue;
     text-align: center;
 }
+#result {
+    color: blue;
+    font-weight: bolder;
+}
