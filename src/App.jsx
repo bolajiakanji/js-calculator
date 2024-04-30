@@ -3,31 +3,31 @@ import "./App.css";
 
 function App() {
   const [displaystate, setDisplaystate] = useState("gd");
-//  useEffect(() => {
-//     let buttonNumbers = document.querySelectorAll(".button_number");
-//     let button 
-//     for (button=0;button<buttonNumbers.length; button++){
-//       buttonNumbers[button].addEventListener("click",you)
+ useEffect(() => {
+    let buttonNumbers = document.querySelectorAll(".button_number");
+    let button 
+    for (button=0;button<buttonNumbers.length; button++){
+      buttonNumbers[button].addEventListener("click",you)
 
-//     }
+    }
 
     
      
-//     return () => {
-//       for (button=0;button<buttonNumbers.length; button++){
+    return () => {
+      for (button=0;button<buttonNumbers.length; button++){
         
-//       buttonNumbers[button].removeEventListener("click",you)}}
+      buttonNumbers[button].removeEventListener("click",you)}}
 
          
 
     
-//     });
+    });
 
-//     function you(e) {
+    function you(e) {
         
-//       console.log('loop')
-//       setDisplaystate(displaystate + e.target.innerText )
-//     }  
+      console.log('loop')
+      setDisplaystate(displaystate + e.target.innerText )
+    }  
 
   
 
