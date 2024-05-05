@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import "./App.css";
 
 function App() {
-  const [displaystate, setDisplaystate] = useState("");
+  const [displaystate, setDisplaystate] = useState("0");
   const [result, setResult] = useState("");
   const [isAllowed, setIsAllowed] = useState("true");
 
@@ -32,18 +32,20 @@ function App() {
         signs[sign].removeEventListener("click", me);
       }
     };
-  },[isAllowed]);
-  
-  
+  });
 
   function you(e) {
     if (displaystate === "0") {
       setDisplaystate("" + e.target.innerText);
-    } else {
+    } else if(/0/.test(displaystate.charAt(displaystate.length-1)) && /[-+*/]/.test(displaystate.charAt(displaystate.length-2))){
+    setDisplaystate((displaystate)=> {let arr= displaystate.slice()
+    let _arr  =arr.split('');
+ _arr[_arr.length-1] = e.target.innerText
+return _arr.join('')})
+    }  else {
       console.log("loop");
       setDisplaystate(displaystate + e.target.innerText);
     }
-    
   }
   function tokenize(s) {
     // --- Parse a calculation string into an array of numbers and operators
@@ -112,10 +114,13 @@ function App() {
   }
 
   function decimal() {
-    if (isAllowed) {
+    
+      if(!"-+/*".includes(displaystate.slice(-1)) ){
+          if(isAllowed){
+      console.log(displaystate.slice(-1))
       setDisplaystate(displaystate + ".");
-      setIsAllowed(false)
-    }
+      setIsAllowed(false);
+    }}
   }
   function me(e) {
     if (displaystate === "0") {
@@ -124,8 +129,22 @@ function App() {
       console.log("loop");
       setDisplaystate(displaystate + e.target.innerText);
     }
-    setIsAllowed(true)
+    setIsAllowed(true);
   }
+  function zero() {
+let _zero = document.getElementById("zero")
+console.log(displaystate.charAt(0))
+if(displaystate==="0"){
+  setDisplaystate("0")
+} else if(/0/.test(displaystate.charAt(displaystate.length-1)) && /[-+*]/.test(displaystate.charAt(displaystate.length-2))){
+console.log("me")
+} else {
+  console.log(parseFloat(displaystate.charAt(displaystate.length-1)))
+  console.log(/[0-9]/.test(parseFloat(displaystate.charAt(displaystate.length-1))))
+ console.log("you")
+
+return setDisplaystate(displaystate + "0")
+}}
 
   return (
     <div id="container">
@@ -134,10 +153,10 @@ function App() {
       <div id="clear" onClick={clear}>
         AC
       </div>
-      <div className="button_number sign" id="divide">
+      <div className="sign" id="divide">
         /
       </div>
-      <div className="button_number sign" id="multiply">
+      <div className="sign" id="multiply">
         *
       </div>
 
@@ -150,7 +169,7 @@ function App() {
       <div className="button_number" id="nine">
         9
       </div>
-      <div className="button_number sign" id="subtract">
+      <div className="sign" id="subtract">
         -
       </div>
 
@@ -163,7 +182,7 @@ function App() {
       <div className="button_number" id="six">
         6
       </div>
-      <div className="button_number sign" id="add">
+      <div className="sign" id="add">
         +
       </div>
 
@@ -179,12 +198,13 @@ function App() {
       <div className="" id="equals" onClick={equal}>
         =
       </div>
-      <div className="button_number" id="zero">
+      <div id="zero" onClick={zero}>
         0
       </div>
       <div id="decimal" onClick={decimal}>
         .
       </div>
+      <br />
       <div className="button_number">^</div>
     </div>
   );

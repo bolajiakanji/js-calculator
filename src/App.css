@@ -8,3 +8,21 @@
     color: blue;
     font-weight: bolder;
 }
+.sign {
+    width: 20px;
+    height: 20px;
+    border: 1px solid black;
+}
+#decimal{
+    width: 20px;
+    height: 20px;
+    border: 1px solid black;
+}
+
+.button_number{
+    width: 20px;
+    height: 20px;
+    border: 1px solid black;
+
+
+}
