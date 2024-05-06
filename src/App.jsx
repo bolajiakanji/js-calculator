@@ -106,7 +106,8 @@ return _arr.join('')})
     let display = document.getElementById("display").innerText;
     console.log(display);
     setResult(calculate(tokenize(display)));
-    setDisplaystate(calculate(tokenize(display)));
+    setDisplaystate(calculate(tokenize(display)).toString());
+    setIsAllowed(true)
   }
 
   function clear() {
@@ -123,20 +124,67 @@ return _arr.join('')})
     }}
   }
   function me(e) {
-    if (displaystate === "0") {
-      setDisplaystate("" + e.target.innerText);
+    if (displaystate.length === 1 && (displaystate ==="0" || displaystate === "-")){
+      
+        
+      
+    }else if ("+-/*".includes(displaystate.charAt(displaystate.length-2)) && displaystate.charAt(displaystate.length-1)==="-"){
+      setDisplaystate((displaystate)=> {let arr= displaystate.slice()
+        let _arr  =arr.split('');
+     _arr[_arr.length-2] = e.target.innerText
+     _arr[_arr.length-1]=""
+     setIsAllowed(true);
+     console.log('goon')
+    return _arr.join('')})
+    }
+   else if ("+/*-.".includes(displaystate.charAt(displaystate.length-1))){
+      setDisplaystate((displaystate)=> {let arr= displaystate.slice()
+        let _arr  =arr.split('');
+     _arr[_arr.length-1] = e.target.innerText
+     setIsAllowed(true);
+     console.log('goon')
+    return _arr.join('')})
+      
+
+    
+    } 
+    
+    else {
+      console.log("loop");
+      setDisplaystate(displaystate + e.target.innerText);
+    }
+    setIsAllowed(true);
+  }
+  function minus(e) {
+    if (displaystate.length === 1 && (displaystate ==="0" || displaystate === "-")){
+  
+        setDisplaystate('-')
+      
+    }
+
+   else if ("+-/*".includes(displaystate.charAt(displaystate.length-2)) && displaystate.charAt(displaystate.length-1)==="-"){
+      setDisplaystate((displaystate)=> {let arr= displaystate.slice()
+        let _arr  =arr.split('');
+     _arr[_arr.length-1] = e.target.innerText
+     
+     console.log('goon')
+    return _arr.join('')})
+      
+
+    
     } else {
       console.log("loop");
       setDisplaystate(displaystate + e.target.innerText);
     }
     setIsAllowed(true);
   }
+  
   function zero() {
 let _zero = document.getElementById("zero")
 console.log(displaystate.charAt(0))
 if(displaystate==="0"){
   setDisplaystate("0")
-} else if(/0/.test(displaystate.charAt(displaystate.length-1)) && /[-+*]/.test(displaystate.charAt(displaystate.length-2))){
+} else if(/0/.test(displaystate.charAt(displaystate.length-1)) && /[-+*/]/.test(displaystate.charAt(displaystate.length-2))){
 console.log("me")
 } else {
   console.log(parseFloat(displaystate.charAt(displaystate.length-1)))
@@ -169,7 +217,7 @@ return setDisplaystate(displaystate + "0")
       <div className="button_number" id="nine">
         9
       </div>
-      <div className="sign" id="subtract">
+      <div  id="subtract" onClick={(e)=>minus(e)}>
         -
       </div>
 
