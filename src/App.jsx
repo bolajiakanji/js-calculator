@@ -6,33 +6,33 @@ function App() {
   const [result, setResult] = useState("");
   const [isAllowed, setIsAllowed] = useState("true");
 
-  useEffect(() => {
-    let buttonNumbers = document.querySelectorAll(".button_number");
-    let button;
-    for (button = 0; button < buttonNumbers.length; button++) {
-      buttonNumbers[button].addEventListener("click", you);
-    }
+  // useEffect(() => {
+  //   let buttonNumbers = document.querySelectorAll(".button_number");
+  //   let button;
+  //   for (button = 0; button < buttonNumbers.length; button++) {
+  //     buttonNumbers[button].addEventListener("click", you);
+  //   }
 
-    return () => {
-      for (button = 0; button < buttonNumbers.length; button++) {
-        buttonNumbers[button].removeEventListener("click", you);
-      }
-    };
-  });
+  //   return () => {
+  //     for (button = 0; button < buttonNumbers.length; button++) {
+  //       buttonNumbers[button].removeEventListener("click", you);
+  //     }
+  //   };
+  // });
 
-  useEffect(() => {
-    let signs = document.querySelectorAll(".sign");
-    let sign;
-    for (sign = 0; sign < signs.length; sign++) {
-      signs[sign].addEventListener("click", me);
-    }
+  // useEffect(() => {
+  //   let signs = document.querySelectorAll(".sign");
+  //   let sign;
+  //   for (sign = 0; sign < signs.length; sign++) {
+  //     signs[sign].addEventListener("click", me);
+  //   }
 
-    return () => {
-      for (sign = 0; sign < signs.length; sign++) {
-        signs[sign].removeEventListener("click", me);
-      }
-    };
-  });
+  //   return () => {
+  //     for (sign = 0; sign < signs.length; sign++) {
+  //       signs[sign].removeEventListener("click", me);
+  //     }
+  //   };
+  // });
 
   function you(e) {
     if (displaystate === "0") {
@@ -43,9 +43,11 @@ function App() {
  _arr[_arr.length-1] = e.target.innerText
 return _arr.join('')})
     }  else {
-      console.log("loop");
+      
       setDisplaystate(displaystate + e.target.innerText);
     }
+    console.log(e.target.innerText)
+    console.log(displaystate)
   }
   function tokenize(s) {
     // --- Parse a calculation string into an array of numbers and operators
@@ -103,38 +105,48 @@ return _arr.join('')})
     }
   }
   function equal() {
-    let display = document.getElementById("display").innerText;
-    console.log(display);
-    setResult(calculate(tokenize(display)));
-    setDisplaystate(calculate(tokenize(display)).toString());
+    // let display = document.getElementById("display").innerText;
+    // console.log(display);
+    // setResult(calculate(tokenize(display)));
+    // setDisplaystate(calculate(tokenize(display)).toString());
+    // setIsAllowed(true)
+    // console.log(calculate(tokenize(display)).toString())
+    console.log(displaystate)
+    let come=eval(displaystate)
+    setDisplaystate(come.toString())
+    console.log("result" + come)
     setIsAllowed(true)
   }
 
   function clear() {
     setDisplaystate("0");
+    setIsAllowed(true)
+    console.log("restart")
+    
   }
 
   function decimal() {
     
       if(!"-+/*".includes(displaystate.slice(-1)) ){
           if(isAllowed){
-      console.log(displaystate.slice(-1))
+      
       setDisplaystate(displaystate + ".");
       setIsAllowed(false);
     }}
+    console.log('decimal')
   }
   function me(e) {
     if (displaystate.length === 1 && (displaystate ==="0" || displaystate === "-")){
       
         
       
-    }else if ("+-/*".includes(displaystate.charAt(displaystate.length-2)) && displaystate.charAt(displaystate.length-1)==="-"){
+    }else if ("-+/*".includes(displaystate.charAt(displaystate.length-2)) && displaystate.charAt(displaystate.length-1)==="-"){
       setDisplaystate((displaystate)=> {let arr= displaystate.slice()
         let _arr  =arr.split('');
      _arr[_arr.length-2] = e.target.innerText
      _arr[_arr.length-1]=""
      setIsAllowed(true);
-     console.log('goon')
+     
     return _arr.join('')})
     }
    else if ("+/*-.".includes(displaystate.charAt(displaystate.length-1))){
@@ -142,7 +154,7 @@ return _arr.join('')})
         let _arr  =arr.split('');
      _arr[_arr.length-1] = e.target.innerText
      setIsAllowed(true);
-     console.log('goon')
+     
     return _arr.join('')})
       
 
@@ -150,10 +162,11 @@ return _arr.join('')})
     } 
     
     else {
-      console.log("loop");
+      
       setDisplaystate(displaystate + e.target.innerText);
     }
     setIsAllowed(true);
+    console.log(e.target.innerText)
   }
   function minus(e) {
     if (displaystate.length === 1 && (displaystate ==="0" || displaystate === "-")){
@@ -167,80 +180,81 @@ return _arr.join('')})
         let _arr  =arr.split('');
      _arr[_arr.length-1] = e.target.innerText
      
-     console.log('goon')
+     
     return _arr.join('')})
       
 
     
     } else {
-      console.log("loop");
+      
       setDisplaystate(displaystate + e.target.innerText);
     }
     setIsAllowed(true);
+    console.log("-")
   }
   
   function zero() {
 let _zero = document.getElementById("zero")
-console.log(displaystate.charAt(0))
+
 if(displaystate==="0"){
   setDisplaystate("0")
 } else if(/0/.test(displaystate.charAt(displaystate.length-1)) && /[-+*/]/.test(displaystate.charAt(displaystate.length-2))){
-console.log("me")
-} else {
-  console.log(parseFloat(displaystate.charAt(displaystate.length-1)))
-  console.log(/[0-9]/.test(parseFloat(displaystate.charAt(displaystate.length-1))))
- console.log("you")
 
-return setDisplaystate(displaystate + "0")
-}}
+} else {
+  
+  
+
+setDisplaystate(displaystate + "0")
+}
+console.log('0')}
 
   return (
-    <div id="container">
+    <div  id="container">
       <div id="display">{displaystate}</div>
-      <div id="result">{result}</div>
+      <div  id="result">{result}</div>
       <div id="clear" onClick={clear}>
         AC
       </div>
-      <div className="sign" id="divide">
+      <div  className="sign" id="divide" onClick={me}>
         /
       </div>
-      <div className="sign" id="multiply">
+      <div  className="sign" id="multiply"onClick={me}>
         *
       </div>
 
-      <div className="button_number" id="seven">
+      <div  className="button_number" id="seven" onClick={you}>
         7
       </div>
-      <div className="button_number" id="eight">
+      <div onClick={you} className="button_number" id="eight">
         8
       </div>
-      <div className="button_number" id="nine">
+      <div onClick={you} className="button_number" id="nine">
         9
       </div>
-      <div  id="subtract" onClick={(e)=>minus(e)}>
+      <div   id="subtract" onClick={(e)=>minus(e)}>
         -
       </div>
 
-      <div className="button_number" id="four">
+      <div onClick={you} className="button_number" id="four">
         4
       </div>
-      <div className="button_number" id="five">
+      <div onClick={you} className="button_number" id="five">
         5
       </div>
-      <div className="button_number" id="six">
+      <div onClick={you} className="button_number" id="six">
         6
       </div>
-      <div className="sign" id="add">
+      <div onClick={me} className="sign" id="add">
         +
       </div>
 
-      <div className="button_number" id="one">
+      <div onClick={you} className="button_number" id="one">
         1
       </div>
-      <div className="button_number" id="two">
+      <div onClick={you} className="button_number" id="two">
         2
       </div>
-      <div className="button_number" id="three">
+      <div onClick={you} className="button_number" id="three">
         3
       </div>
       <div className="" id="equals" onClick={equal}>
@@ -249,11 +263,11 @@ return setDisplaystate(displaystate + "0")
       <div id="zero" onClick={zero}>
         0
       </div>
-      <div id="decimal" onClick={decimal}>
+      <div  id="decimal" onClick={decimal}>
         .
       </div>
       <br />
-      <div className="button_number">^</div>
+      <div onClick={you} className="button_number">^</div>
     </div>
   );
 }
