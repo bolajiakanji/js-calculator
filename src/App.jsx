@@ -250,6 +250,9 @@ function App() {
         <button id="clear" onClick={clear}>
           AC
         </button>
+        <button id="back" className="btn" onClick={back}>
+          back
+        </button>
         <button className="btn sign" id="divide">
           /
         </button>
@@ -301,9 +304,7 @@ function App() {
         <button id="decimal" className="btn" onClick={decimal}>
           .
         </button>
-        <button id="back" className="btn" onClick={back}>
-          back
-        </button>
+        
 
         <br />
       </div>
