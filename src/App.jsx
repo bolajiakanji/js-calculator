@@ -54,10 +54,12 @@ function App() {
     console.log(displaystate);
   }
   function tokenize(s) {
+    let  changeTokens = s.replace(/x/g, "*")
+
     // --- Parse a calculation string into an array of numbers and operators
     const r = [];
     let token = "";
-    for (const character of s) {
+    for (const character of changeTokens) {
       if ("^*/+-".includes(character)) {
         if (token === "" && character === "-") {
           token = "-";
@@ -251,14 +253,12 @@ function App() {
           AC
         </button>
         <button id="back" className="btn" onClick={back}>
-          back
+          Back
         </button>
         <button className="btn sign" id="divide">
           /
         </button>
-        <button className="btn sign" id="multiply">
-          *
-        </button>
+        
 
         <button className="btn button_number" id="seven">
           7
@@ -266,12 +266,15 @@ function App() {
         <button className="btn button_number" id="eight">
           8
         </button>
+        
         <button className="btn button_number" id="nine">
           9
         </button>
-        <button id="subtract" className="btn" onClick={minus}>
-          -
+        <button className="btn sign" id="multiply">
+          x
         </button>
+
+        
 
         <button className="btn button_number" id="four">
           4
@@ -282,10 +285,10 @@ function App() {
         <button className="btn button_number" id="six">
           6
         </button>
-        <button className="btn sign" id="add">
-          +
+        <button id="subtract" className="btn" onClick={minus}>
+          -
         </button>
-
+        
         <button className="btn button_number" id="one">
           1
         </button>
@@ -295,14 +298,20 @@ function App() {
         <button className="btn button_number" id="three">
           3
         </button>
-        <button className="btn" id="equals" onClick={equal}>
-          =
+        <button className="btn sign" id="add">
+          +
         </button>
+
+        
         <button id="zero" className="btn" onClick={zero}>
           0
         </button>
+        
         <button id="decimal" className="btn" onClick={decimal}>
           .
+        </button>
+        <button className="btn" id="equals" onClick={equal}>
+          =
         </button>
         
 

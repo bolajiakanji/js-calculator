@@ -13,7 +13,7 @@ background-color: aqua;
     width: 350px;
     background-coor: blue;
     text-align: center;
-    background-color: rgba(0, 0, 0, 0.816);
+    
 color: white;
 
 }
@@ -43,6 +43,10 @@ color: white;
     grid-template-columns: 1fr 1fr 1fr 1fr ;
     color: white;
     background-color: aqua;
+    gap: 6px 6px;
+    margin-top: 3px;
+    padding-top: 7px;
+    border: none;
 
     
     
@@ -51,14 +55,27 @@ color: white;
 .btn {
     color: white;
     background-color: black;
-    height: auto;
+    height:60px;
+    border-radius: 50%;
+    box-shadow: 3px 3px 5px rgb(198, 239, 117);
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+
+
     
     
     
 }
+ #back {
+    background-color: brown;
+ }
 
-#clar {
+#clear {
+    cursor: pointer;
     column-span: 2;
+    border: none;
+    box-shadow: 3px 3px 6px rgb(198, 239, 117);
 }
 #display {
     /* overflow: visible;
@@ -66,5 +83,37 @@ color: white;
     
     /* overflow-wrap: break-word; */
     white-space: initial;
+    text-align: end;
+    height: 50px;
+    border-radius:9px ;
+    font-size: 2.2rem;
+    padding: 7px 10px ;
+    background-color: rgba(41, 18, 18, 0.83);
+    height: 80px;
+    
 
+}
+
+.sign {
+    background-color: rgba(167, 99, 99, 0.684);
+    font-size: 18px;
+}
+
+#clear {
+    border-radius: 50%;
+    grid-column: span 2;
+    font-size: 18px;
+    
+}
+
+#subtract {
+    background-color: rgba(167, 99, 99, 0.684);
+    font-size: 18px;
+
+}
+
+#equals {
+    grid-column: span 2;
+    colr: blue;
+    background-color: blue;
 }
