@@ -3,7 +3,7 @@ import "./App.css";
 
 function App() {
   const [displaystate, setDisplaystate] = useState("0");
-  const [result, setResult] = useState("");
+  const [resultStore, setResultStore] = useState("0");
   const [isAllowed, setIsAllowed] = useState("true");
 
   useEffect(() => {
@@ -35,23 +35,42 @@ function App() {
   });
 
   function you(e) {
-    if (displaystate === "0") {
+    if (displaystate ==="LIMIT EXCEEDED") {
+
+    }
+    else if (displaystate.length === 20) {
+      setDisplaystate("LIMIT EXCEEDED")
+setTimeout(() => {
+  setDisplaystate("0")
+  setResultStore("0")
+}, 1000);
+
+    }
+   else  if (displaystate === "0") {
       setDisplaystate("" + e.target.innerText);
+      setResultStore("" + e.target.innerText)
     } else if (
       /0/.test(displaystate.charAt(displaystate.length - 1)) &&
-      /[-+*/]/.test(displaystate.charAt(displaystate.length - 2))
+      /[-+x/]/.test(displaystate.charAt(displaystate.length - 2))
     ) {
       setDisplaystate((displaystate) => {
         let arr = displaystate.slice();
         let _arr = arr.split("");
         _arr[_arr.length - 1] = e.target.innerText;
         return _arr.join("");
-      });
+        
+      })
+      setResultStore((displaystate) => {
+        let arr = displaystate.slice();
+        let _arr = arr.split("");
+        _arr[_arr.length - 1] = e.target.innerText;
+        return _arr.join("")});
     } else {
       setDisplaystate(displaystate + e.target.innerText);
+      setResultStore(displaystate + e.target.innerText)
     }
-    console.log(e.target.innerText);
-    console.log(displaystate);
+    
+  
   }
   function tokenize(s) {
     let  changeTokens = s.replace(/x/g, "*")
@@ -81,9 +100,9 @@ function App() {
   function calculate(tokens) {
     // --- Perform a calculation expressed as an array of operators and numbers
     const operatorPrecedence = [
-      { "^": (a, b) => Math.pow(a, b) },
-      { "*": (a, b) => a * b, "/": (a, b) => a / b },
-      { "+": (a, b) => a + b, "-": (a, b) => a - b },
+      
+      { "*": (a, b) => (a*10000 * b*10000)/(100000000), "/": (a, b) => (a*10000) / (b*10000) },
+      { "+": (a, b) => (a*10000 + b*10000)/10000, "-": (a, b) => (a*10000 - b*10000)/10000 },
     ];
     let operator;
     for (const operators of operatorPrecedence) {
@@ -111,43 +130,64 @@ function App() {
     }
   }
   function equal() {
+    let res = displaystate
     let display = document.getElementById("display").innerText;
-    console.log(display);
-    setResult(calculate(tokenize(display)));
+    
+    setResultStore(res + " = " + calculate(tokenize(display)).toString())
     setDisplaystate(calculate(tokenize(display)).toString());
     setIsAllowed(true);
     console.log(calculate(tokenize(display)).toString());
     console.log(displaystate);
+    
 
     setIsAllowed(true);
   }
 
   function clear() {
     setDisplaystate("0");
+    setResultStore("0")
     setIsAllowed(true);
-    console.log("restart");
+    
   }
 
   function back() {
-    if ("+-*/.".includes(displaystate.length - 1)) [setIsAllowed(true)];
+    if ("+-x/.".includes(displaystate.length - 1)) [setIsAllowed(true)];
   }
 
   function decimal() {
-    if (!"-+/*".includes(displaystate.slice(-1))) {
+    if (displaystate ==="LIMIT EXCEEDED") {
+
+    }
+    else if (displaystate.length === 20) {
+      setDisplaystate("LIMIT EXCEEDED")
+setTimeout(() => {
+  setDisplaystate("0")
+}, 1000);}
+    else if (!"-+/x".includes(displaystate.slice(-1))) {
       if (isAllowed) {
         setDisplaystate(displaystate + ".");
+        setResultStore(displaystate + ".")
         setIsAllowed(false);
       }
     }
     console.log("decimal");
   }
   function me(e) {
-    if (
+    if (displaystate ==="LIMIT EXCEEDED") {
+
+    }
+    else if (displaystate.length === 20) {
+      setDisplaystate("LIMIT EXCEEDED")
+setTimeout(() => {
+  setDisplaystate("0")
+}, 1000);}
+
+    else if (
       displaystate.length === 1 &&
       (displaystate === "0" || displaystate === "-")
     ) {
     } else if (
-      "-+/*".includes(displaystate.charAt(displaystate.length - 2)) &&
+      "-+/x".includes(displaystate.charAt(displaystate.length - 2)) &&
       displaystate.charAt(displaystate.length - 1) === "-"
     ) {
       setDisplaystate((displaystate) => {
@@ -159,8 +199,25 @@ function App() {
 
         return _arr.join("");
       });
-    } else if ("+/*-.".includes(displaystate.charAt(displaystate.length - 1))) {
+      setResultStore((displaystate) => {
+        let arr = displaystate.slice();
+        let _arr = arr.split("");
+        _arr[_arr.length - 2] = e.target.innerText;
+        _arr[_arr.length - 1] = "";
+        setIsAllowed(true);
+
+        return _arr.join("");
+      });
+    } else if ("+/x-.".includes(displaystate.charAt(displaystate.length - 1))) {
       setDisplaystate((displaystate) => {
+        let arr = displaystate.slice();
+        let _arr = arr.split("");
+        _arr[_arr.length - 1] = e.target.innerText;
+        setIsAllowed(true);
+
+        return _arr.join("");
+      });
+      setResultStore((displaystate) => {
         let arr = displaystate.slice();
         let _arr = arr.split("");
         _arr[_arr.length - 1] = e.target.innerText;
@@ -170,18 +227,28 @@ function App() {
       });
     } else {
       setDisplaystate(displaystate + e.target.innerText);
+      setResultStore(displaystate + e.target.innerText)
     }
     setIsAllowed(true);
     console.log(e.target.innerText);
   }
   function minus(e) {
-    if (
+    if (displaystate ==="LIMIT EXCEEDED") {
+
+    }
+    else if (displaystate.length === 20) {
+      setDisplaystate("LIMIT EXCEEDED")
+setTimeout(() => {
+  setDisplaystate("0")
+  setResultStore("0")
+}, 1000);}
+  else  if (
       displaystate.length === 1 &&
       (displaystate === "0" || displaystate === "-")
     ) {
       setDisplaystate("-");
     } else if (
-      "+-/*".includes(displaystate.charAt(displaystate.length - 2)) &&
+      "+-/x".includes(displaystate.charAt(displaystate.length - 2)) &&
       displaystate.charAt(displaystate.length - 1) === "-"
     ) {
       setDisplaystate((displaystate) => {
@@ -191,8 +258,17 @@ function App() {
 
         return _arr.join("");
       });
+      setResultStore((displaystate) => {
+        let arr = displaystate.slice();
+        let _arr = arr.split("");
+        _arr[_arr.length - 1] = e.target.innerText;
+
+        return _arr.join("");
+      });
     } else {
       setDisplaystate(displaystate + e.target.innerText);
+            setResultStore(displaystate + e.target.innerText);
+
     }
     setIsAllowed(true);
     console.log("-");
@@ -200,25 +276,41 @@ function App() {
 
   function zero() {
     let _zero = document.getElementById("zero");
+    if (displaystate ==="LIMIT EXCEEDED") {
 
-    if (displaystate === "0") {
+    }
+    else if (displaystate.length === 20) {
+      setDisplaystate("LIMIT EXCEEDED")
+setTimeout(() => {
+  setDisplaystate("0")
+    setResultStore("0")
+
+  }, 1000);}
+
+    
+
+    else if (displaystate === "0") {
       setDisplaystate("0");
+      setResultStore("0")
     } else if (
       /0/.test(displaystate.charAt(displaystate.length - 1)) &&
-      /[-+*/]/.test(displaystate.charAt(displaystate.length - 2))
+      /[-+x/]/.test(displaystate.charAt(displaystate.length - 2))
     ) {
     } else {
       setDisplaystate(displaystate + "0");
+            setResultStore(displaystate + "0");
+
     }
     console.log("0");
   }
   function back() {
     if (displaystate.length === 1) {
       setDisplaystate("0");
+      setResultStore("0")
       setIsAllowed(true);
     } else {
       if (
-        "+-/*".includes(displaystate.slice(-1))
+        "+-/x".includes(displaystate.slice(-1))
 )
        {
         let str = displaystate.slice(0, -1);
@@ -226,7 +318,7 @@ function App() {
         arr.push(str.lastIndexOf("-"));
         arr.push(str.lastIndexOf("+"));
         arr.push(str.lastIndexOf("/"));
-        arr.push(str.lastIndexOf("*"));
+        arr.push(str.lastIndexOf("x"));
 
         let sort = arr.sort(function (a, b) {
           return b - a;
@@ -240,14 +332,16 @@ function App() {
       }
 
       setDisplaystate(displaystate.slice(0, -1));
+      setResultStore(displaystate.slice(0, -1))
     }
   }
 
   return (
     <div id="container">
-      {" "}
+      <div id="display-box">
+      <div id="result-store" style={{color : "orange"}}>{resultStore}</div>
       <div id="display">{displaystate}</div>
-      <div id="result"></div>
+      </div>
       <div className="btn-box">
         <button id="clear" onClick={clear}>
           AC

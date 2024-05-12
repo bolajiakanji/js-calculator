@@ -1,3 +1,20 @@
+@import 'https://fonts.googleapis.com/css?family=Share+Tech+Mono';
+
+@font-face {
+  font-family: 'Digital';
+  src: url('//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.eot');
+  src: url('//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.eot?#iefix')
+      format('embedded-opentype'),
+    url('//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.woff2')
+      format('woff2'),
+    url('//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.woff')
+      format('woff'),
+    url('//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.ttf')
+      format('truetype'),
+    url('//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.svg#Digital-7')
+      format('svg');
+}
+
 * {
     padding: 0;
     margin: 0;
@@ -15,6 +32,8 @@ background-color: aqua;
     text-align: center;
     
 color: white;
+font-family:Digital ;
+
 
 }
 #result {
@@ -37,13 +56,15 @@ color: white;
     height: 20px;
     border: 1px solid black; */
 }
+    
+
 
 .btn-box {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr ;
     color: white;
     background-color: aqua;
-    gap: 6px 6px;
+    gap: 8px 8px;
     margin-top: 3px;
     padding-top: 7px;
     border: none;
@@ -77,26 +98,30 @@ color: white;
     border: none;
     box-shadow: 3px 3px 6px rgb(198, 239, 117);
 }
-#display {
-    /* overflow: visible;
-    text-align: end; */
-    
-    /* overflow-wrap: break-word; */
+
+#display-box {
     white-space: initial;
     text-align: end;
-    height: 50px;
+    
     border-radius:9px ;
-    font-size: 2.2rem;
-    padding: 7px 10px ;
+    font-size: 1.4rem;
+    padding: 10px 10px ;
     background-color: rgba(41, 18, 18, 0.83);
     height: 80px;
+
+}
+#display {
+   font-size: 2.3rem; 
+   padding-top: 12px;
+    
+   
     
 
 }
 
 .sign {
     background-color: rgba(167, 99, 99, 0.684);
-    font-size: 18px;
+    font-size: 22px;
 }
 
 #clear {
@@ -108,8 +133,11 @@ color: white;
 
 #subtract {
     background-color: rgba(167, 99, 99, 0.684);
-    font-size: 18px;
+    font-size: 30px;
 
+}
+#add {
+    font-siz: 30px;
 }
 
 #equals {
@@ -117,3 +145,18 @@ color: white;
     colr: blue;
     background-color: blue;
 }
+
+
+@media only screen and (max-width: 650px) {
+    /* For mobile phones: */
+    #container {
+        
+        padding: 20px;
+    }
+
+    .btn-box {
+        gap: 10px;
+    }
+
+  }
+  
