@@ -105,14 +105,15 @@ font-family:Digital ;
     
     border-radius:9px ;
     font-size: 1.4rem;
-    padding: 10px 10px ;
+    padding: 12px 10px ;
     background-color: rgba(41, 18, 18, 0.83);
     height: 80px;
 
 }
 #display {
-   font-size: 2.3rem; 
-   padding-top: 12px;
+   font-size: 2.1rem;
+ 
+   padding-top: 1rem;
     
    
     
@@ -150,12 +151,15 @@ font-family:Digital ;
 @media only screen and (max-width: 650px) {
     /* For mobile phones: */
     #container {
+        width: 305px;
         
-        padding: 20px;
     }
 
     .btn-box {
         gap: 10px;
+    }
+    #display {
+        font-size:1.9rem ;
     }
 
   }
