@@ -35,20 +35,16 @@ function App() {
   });
 
   function you(e) {
-    if (displaystate ==="LIMIT EXCEEDED") {
-
-    }
-    else if (displaystate.length === 20) {
-      setDisplaystate("LIMIT EXCEEDED")
-setTimeout(() => {
-  setDisplaystate("0")
-  setResultStore("0")
-}, 1000);
-
-    }
-   else  if (displaystate === "0") {
+    if (displaystate === "LIMIT EXCEEDED") {
+    } else if (displaystate.length === 20) {
+      setDisplaystate("LIMIT EXCEEDED");
+      setTimeout(() => {
+        setDisplaystate("0");
+        setResultStore("0");
+      }, 1000);
+    } else if (displaystate === "0") {
       setDisplaystate("" + e.target.innerText);
-      setResultStore("" + e.target.innerText)
+      setResultStore("" + e.target.innerText);
     } else if (
       /0/.test(displaystate.charAt(displaystate.length - 1)) &&
       /[-+x/]/.test(displaystate.charAt(displaystate.length - 2))
@@ -58,22 +54,20 @@ setTimeout(() => {
         let _arr = arr.split("");
         _arr[_arr.length - 1] = e.target.innerText;
         return _arr.join("");
-        
-      })
+      });
       setResultStore((displaystate) => {
         let arr = displaystate.slice();
         let _arr = arr.split("");
         _arr[_arr.length - 1] = e.target.innerText;
-        return _arr.join("")});
+        return _arr.join("");
+      });
     } else {
       setDisplaystate(displaystate + e.target.innerText);
-      setResultStore(displaystate + e.target.innerText)
+      setResultStore(displaystate + e.target.innerText);
     }
-    
-  
   }
   function tokenize(s) {
-    let  changeTokens = s.replace(/x/g, "*")
+    let changeTokens = s.replace(/x/g, "*");
 
     // --- Parse a calculation string into an array of numbers and operators
     const r = [];
@@ -100,9 +94,14 @@ setTimeout(() => {
   function calculate(tokens) {
     // --- Perform a calculation expressed as an array of operators and numbers
     const operatorPrecedence = [
-      
-      { "*": (a, b) => (a*10000 * b*10000)/(100000000), "/": (a, b) => (a*10000) / (b*10000) },
-      { "+": (a, b) => (a*10000 + b*10000)/10000, "-": (a, b) => (a*10000 - b*10000)/10000 },
+      {
+        "*": (a, b) => (a * 10000 * b * 10000) / 100000000,
+        "/": (a, b) => (a * 10000) / (b * 10000),
+      },
+      {
+        "+": (a, b) => (a * 10000 + b * 10000) / 10000,
+        "-": (a, b) => (a * 10000 - b * 10000) / 10000,
+      },
     ];
     let operator;
     for (const operators of operatorPrecedence) {
@@ -130,24 +129,29 @@ setTimeout(() => {
     }
   }
   function equal() {
-    let res = displaystate
+    let res = displaystate;
     let display = document.getElementById("display").innerText;
-    
-    setResultStore(res + " = " + calculate(tokenize(display)).toString())
+    let cal_result = calculate(tokenize(display)).toString()
+    if (cal_result.includes(".")) {
+      setIsAllowed(false)
+
+    }else {
+    setIsAllowed(true)
+    }
+
+    setResultStore(res + " = " + calculate(tokenize(display)).toString());
     setDisplaystate(calculate(tokenize(display)).toString());
-    setIsAllowed(true);
+    
     console.log(calculate(tokenize(display)).toString());
     console.log(displaystate);
-    
 
-    setIsAllowed(true);
+    
   }
 
   function clear() {
     setDisplaystate("0");
-    setResultStore("0")
+    setResultStore("0");
     setIsAllowed(true);
-    
   }
 
   function back() {
@@ -155,34 +159,29 @@ setTimeout(() => {
   }
 
   function decimal() {
-    if (displaystate ==="LIMIT EXCEEDED") {
-
-    }
-    else if (displaystate.length === 20) {
-      setDisplaystate("LIMIT EXCEEDED")
-setTimeout(() => {
-  setDisplaystate("0")
-}, 1000);}
-    else if (!"-+/x".includes(displaystate.slice(-1))) {
+    if (displaystate === "LIMIT EXCEEDED") {
+    } else if (displaystate.length === 20) {
+      setDisplaystate("LIMIT EXCEEDED");
+      setTimeout(() => {
+        setDisplaystate("0");
+      }, 1000);
+    } else if (!"-+/x".includes(displaystate.slice(-1))) {
       if (isAllowed) {
         setDisplaystate(displaystate + ".");
-        setResultStore(displaystate + ".")
+        setResultStore(displaystate + ".");
         setIsAllowed(false);
       }
     }
     console.log("decimal");
   }
   function me(e) {
-    if (displaystate ==="LIMIT EXCEEDED") {
-
-    }
-    else if (displaystate.length === 20) {
-      setDisplaystate("LIMIT EXCEEDED")
-setTimeout(() => {
-  setDisplaystate("0")
-}, 1000);}
-
-    else if (
+    if (displaystate === "LIMIT EXCEEDED") {
+    } else if (displaystate.length === 20) {
+      setDisplaystate("LIMIT EXCEEDED");
+      setTimeout(() => {
+        setDisplaystate("0");
+      }, 1000);
+    } else if (
       displaystate.length === 1 &&
       (displaystate === "0" || displaystate === "-")
     ) {
@@ -227,22 +226,20 @@ setTimeout(() => {
       });
     } else {
       setDisplaystate(displaystate + e.target.innerText);
-      setResultStore(displaystate + e.target.innerText)
+      setResultStore(displaystate + e.target.innerText);
     }
     setIsAllowed(true);
     console.log(e.target.innerText);
   }
   function minus(e) {
-    if (displaystate ==="LIMIT EXCEEDED") {
-
-    }
-    else if (displaystate.length === 20) {
-      setDisplaystate("LIMIT EXCEEDED")
-setTimeout(() => {
-  setDisplaystate("0")
-  setResultStore("0")
-}, 1000);}
-  else  if (
+    if (displaystate === "LIMIT EXCEEDED") {
+    } else if (displaystate.length === 20) {
+      setDisplaystate("LIMIT EXCEEDED");
+      setTimeout(() => {
+        setDisplaystate("0");
+        setResultStore("0");
+      }, 1000);
+    } else if (
       displaystate.length === 1 &&
       (displaystate === "0" || displaystate === "-")
     ) {
@@ -267,8 +264,7 @@ setTimeout(() => {
       });
     } else {
       setDisplaystate(displaystate + e.target.innerText);
-            setResultStore(displaystate + e.target.innerText);
-
+      setResultStore(displaystate + e.target.innerText);
     }
     setIsAllowed(true);
     console.log("-");
@@ -276,43 +272,33 @@ setTimeout(() => {
 
   function zero() {
     let _zero = document.getElementById("zero");
-    if (displaystate ==="LIMIT EXCEEDED") {
-
-    }
-    else if (displaystate.length === 20) {
-      setDisplaystate("LIMIT EXCEEDED")
-setTimeout(() => {
-  setDisplaystate("0")
-    setResultStore("0")
-
-  }, 1000);}
-
-    
-
-    else if (displaystate === "0") {
+    if (displaystate === "LIMIT EXCEEDED") {
+    } else if (displaystate.length === 20) {
+      setDisplaystate("LIMIT EXCEEDED");
+      setTimeout(() => {
+        setDisplaystate("0");
+        setResultStore("0");
+      }, 1000);
+    } else if (displaystate === "0") {
       setDisplaystate("0");
-      setResultStore("0")
+      setResultStore("0");
     } else if (
       /0/.test(displaystate.charAt(displaystate.length - 1)) &&
       /[-+x/]/.test(displaystate.charAt(displaystate.length - 2))
     ) {
     } else {
       setDisplaystate(displaystate + "0");
-            setResultStore(displaystate + "0");
-
+      setResultStore(displaystate + "0");
     }
     console.log("0");
   }
   function back() {
     if (displaystate.length === 1) {
       setDisplaystate("0");
-      setResultStore("0")
+      setResultStore("0");
       setIsAllowed(true);
     } else {
-      if (
-        "+-/x".includes(displaystate.slice(-1))
-)
-       {
+      if ("+-/x".includes(displaystate.slice(-1))) {
         let str = displaystate.slice(0, -1);
         let arr = [];
         arr.push(str.lastIndexOf("-"));
@@ -332,15 +318,17 @@ setTimeout(() => {
       }
 
       setDisplaystate(displaystate.slice(0, -1));
-      setResultStore(displaystate.slice(0, -1))
+      setResultStore(displaystate.slice(0, -1));
     }
   }
 
   return (
     <div id="container">
       <div id="display-box">
-      <div id="result-store" style={{color : "orange"}}>{resultStore}</div>
-      <div id="display">{displaystate}</div>
+        <div id="result-store" style={{ color: "orange" }}>
+          {resultStore}
+        </div>
+        <div id="display">{displaystate}</div>
       </div>
       <div className="btn-box">
         <button id="clear" onClick={clear}>
@@ -352,7 +340,6 @@ setTimeout(() => {
         <button className="btn sign" id="divide">
           /
         </button>
-        
 
         <button className="btn button_number" id="seven">
           7
@@ -360,15 +347,13 @@ setTimeout(() => {
         <button className="btn button_number" id="eight">
           8
         </button>
-        
+
         <button className="btn button_number" id="nine">
           9
         </button>
         <button className="btn sign" id="multiply">
           x
         </button>
-
-        
 
         <button className="btn button_number" id="four">
           4
@@ -382,7 +367,7 @@ setTimeout(() => {
         <button id="subtract" className="btn" onClick={minus}>
           -
         </button>
-        
+
         <button className="btn button_number" id="one">
           1
         </button>
@@ -396,18 +381,16 @@ setTimeout(() => {
           +
         </button>
 
-        
         <button id="zero" className="btn" onClick={zero}>
           0
         </button>
-        
+
         <button id="decimal" className="btn" onClick={decimal}>
           .
         </button>
         <button className="btn" id="equals" onClick={equal}>
           =
         </button>
-        
 
         <br />
       </div>
