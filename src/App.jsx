@@ -5,6 +5,8 @@ function App() {
   const [displaystate, setDisplaystate] = useState("0");
   const [resultStore, setResultStore] = useState("0");
   const [isAllowed, setIsAllowed] = useState("true");
+  const [isanswer, setIAnswer] = useState("false");
+
 
   useEffect(() => {
     let buttonNumbers = document.querySelectorAll(".button_number");
@@ -35,6 +37,11 @@ function App() {
   });
 
   function you(e) {
+    console.log(displaystate)
+    if (isanswer) {
+      setDisplaystate(e.target.innerText)
+      setIAnswer(false)
+    } else {
     if (displaystate === "LIMIT EXCEEDED") {
     } else if (displaystate.length === 20) {
       setDisplaystate("LIMIT EXCEEDED");
@@ -64,7 +71,7 @@ function App() {
     } else {
       setDisplaystate(displaystate + e.target.innerText);
       setResultStore(displaystate + e.target.innerText);
-    }
+    }}
   }
   function tokenize(s) {
     let changeTokens = s.replace(/x/g, "*");
@@ -138,12 +145,15 @@ function App() {
     }else {
     setIsAllowed(true)
     }
+    console.log(display)
+    console.log(displaystate)
 
     setResultStore(res + " = " + calculate(tokenize(display)).toString());
     setDisplaystate(calculate(tokenize(display)).toString());
     
     console.log(calculate(tokenize(display)).toString());
     console.log(displaystate);
+    setIAnswer(true)
 
     
   }
@@ -152,6 +162,7 @@ function App() {
     setDisplaystate("0");
     setResultStore("0");
     setIsAllowed(true);
+    
   }
 
   function back() {
@@ -229,6 +240,7 @@ function App() {
       setResultStore(displaystate + e.target.innerText);
     }
     setIsAllowed(true);
+    setIAnswer(false)
     console.log(e.target.innerText);
   }
   function minus(e) {
@@ -399,3 +411,4 @@ function App() {
 }
 
 export default App;
+
